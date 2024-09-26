@@ -46,3 +46,10 @@ def admin_poll():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+@app.route('/reset_poll', methods=['POST'])
+def reset_poll():
+    global vote_counts
+    vote_counts = Counter({'A': 0, 'B': 0, 'C': 0, 'D': 0})  # Reset to 0
+    return jsonify({'message': 'Poll results have been reset!'}), 200
