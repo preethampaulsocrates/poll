@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audience Poll</title>
+</head>
+<body>
+    <h1>Audience Poll</h1>
+    <p>Select your answer:</p>
+
+    <form id="pollForm">
+        <input type="radio" name="option" value="A"> A<br>
+        <input type="radio" name="option" value="B"> B<br>
+        <input type="radio" name="option" value="C"> C<br>
+        <input type="radio" name="option" value="D"> D<br>
+        <button type="button" onclick="submitVote()">Submit</button>
+    </form>
+
+    <script>
+        let selectedOption = '';
+
+        // Submit the vote
+        function submitVote() {
+            let radios = document.getElementsByName('option');
+            for (let radio of radios) {
+                if (radio.checked) {
+                    selectedOption = radio.value;
+                    break;
+                }
+            }
+
+            if (!selectedOption) {
+                alert("Please select an option.");
+                return;
+            }
+
+            fetch('/submit_vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ option: selectedOption })
+            }).then(response => response.json())
+              .then(data => {
+                  alert(data.message);
+              });
+        }
+    </script>
+</body>
+</html>
