@@ -12,6 +12,8 @@
     <p>Option C: <span id="optionC">0%</span></p>
     <p>Option D: <span id="optionD">0%</span></p>
 
+    <button id="resetButton">Reset Poll</button>
+
     <script>
         // Function to fetch and update poll results
         function updateResults() {
@@ -24,6 +26,20 @@
                     document.getElementById('optionD').innerText = `${data.D.toFixed(2)}%`;
                 });
         }
+
+        // Function to reset the poll results
+        function resetPoll() {
+            fetch('/reset_poll', {
+                method: 'POST'
+            }).then(response => response.json())
+              .then(data => {
+                  alert(data.message);
+                  updateResults(); // Update results after reset
+              });
+        }
+
+        // Attach reset button click event
+        document.getElementById('resetButton').addEventListener('click', resetPoll);
 
         // Update the poll results every 3 seconds
         setInterval(updateResults, 3000);
