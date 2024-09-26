@@ -15,7 +15,7 @@ EXPOSE 5000
 
 # Define environment variables for Flask
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_HOST=0.0.0.1
 
 # Command to run the Flask app
 CMD ["flask", "run"]
